@@ -98,18 +98,20 @@ class Decode_Asset_Management {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
+		$this->loadClasses();
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-decode-asset-management-loader.php';
+		require_once plugin_dir_path(dirname(__FILE__)).'includes/helpers.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-decode-asset-management-i18n.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/admin/Decode_List_Table.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
@@ -171,16 +173,6 @@ class Decode_Asset_Management {
 
 		$plugin_public = new Decode_Asset_Management_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$plugin_admin_menu_page= new Decode_Asset_Menu();
-		$plugin_admin_menu_page->setPageTitle("Decode Asset");
-		$plugin_admin_menu_page->setMenuTitle("Decode Asset");
-		$plugin_admin_menu_page->setCapability("manage_options");
-		$plugin_admin_menu_page->setSlug("decode-asset");				
-		$plugin_admin_menu_page->addMenuPage();
-		add_action("menu_page_decode-asset",function(){
-			
-		});
-		
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
@@ -226,4 +218,21 @@ class Decode_Asset_Management {
 		return $this->version;
 	}
 
+	public function loadClasses(){
+		spl_autoload_extensions(".php");
+		spl_autoload_register(function($class){
+			$class=str_replace("_","-",strtolower($class));
+			$class_path=explode("\\",$class);
+			end($class_path);
+			$key=key($class_path);
+			if($key>=1){
+				$class_path[$key]=$class_path[$key].".php";
+			}
+			$class_path=PLUGIN_DIR."classes/".implode("/",$class_path);
+			// var_dump($class_path);
+			if(file_exists($class_path)){
+				require_once($class_path);
+			}
+		});
+	}
 }

@@ -40,6 +40,7 @@ class Decode_Asset_Management_Admin {
 	 */
 	private $version;
 
+	private $dashboard;
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -48,10 +49,13 @@ class Decode_Asset_Management_Admin {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-
+		// $this->enqueue_scripts()
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
+		$this->dashboard= new Decode_Asset_Menu();
+		$this->displayDashboardMenu();
+		add_action("admin_init",array($this,"displaySubMenu"));
+		// $this->displaySubMenu();
 	}
 
 	/**
@@ -75,6 +79,7 @@ class Decode_Asset_Management_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/decode-asset-management-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bootstrap-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'am_admin_bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
 	}
 
 	/**
@@ -95,9 +100,36 @@ class Decode_Asset_Management_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		 wp_enqueue_script('am_admin_bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js',array('jquery'));
+		 wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/decode-asset-management-admin.js', array( 'jquery' ), $this->version, false );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/decode-asset-management-admin.js', array( 'jquery' ), $this->version, false );
+	}
 
+	public function displayDashboardMenu(){
+		$this->dashboard->setPageTitle("Decode Asset");
+		$this->dashboard->setMenuTitle("Decode Asset");
+		$this->dashboard->setCapability("manage_options");
+		$this->dashboard->setSlug("decode-asset");
+		$this->dashboard->addMenuPage();
+		add_action("menu_page_decode-asset",array($this,"displayDashboardTemplate"));
+	}
+
+	public function displaySubMenu(){
+		add_submenu_page("decode-asset","Decode Allotable","Allotable","manage_options","decode-asset-allotable",array($this,"displayAllotableMenu"));
+	}
+
+	public function displayDashboardTemplate(){
+		$myListTable = new TWMGTable\Decode_List_Table();
+		$data=array("myListTable"=>$myListTable,"form"=>$this->displayForm());
+		return view("views/admin/dashboard",$data);
+	}
+
+	public function displayAllotableMenu(){
+
+	}
+
+	public function displayForm(){
+		return (new TWMGForm\TWMG_Form(array(array("type"=>"textbox","name"=>"decode_from"))))->display();
 	}
 
 }
