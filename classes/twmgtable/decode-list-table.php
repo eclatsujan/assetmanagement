@@ -81,7 +81,7 @@ if(!class_exists("Decode_List_Table")){
     private function table_data()
     {
         $data = array();
-
+            
         return $data;
     }
 

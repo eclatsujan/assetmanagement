@@ -12,12 +12,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="GET">
+        <form method="POST" id="decode_asset_form">
           <p><?php echo $form; ?></p>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="decode_submit_new_asset">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

@@ -1,7 +1,14 @@
 (function( $ ) {
 	'use strict';
 
-	console.log("ok");
+	$(document).ready(function(){
+		console.log($("#decode_submit_new_asset"));
+		$("#decode_submit_new_asset").on("click",function(){
+			let form=new FormData($("#decode_asset_form"));
+			console.log(form.get());
+		});
+	});
+
 
 	/**
 	 * All of the code for your admin-facing JavaScript source

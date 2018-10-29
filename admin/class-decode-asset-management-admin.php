@@ -78,8 +78,8 @@ class Decode_Asset_Management_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/decode-asset-management-admin.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bootstrap-admin.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'am_admin_bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+		wp_enqueue_style( 'am_admin_bootstrap', plugin_dir_url( __FILE__ ) . 'css/bootstrap-admin.min.css', array(), $this->version, 'all' );
+		// wp_enqueue_style( 'am_admin_bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
 	}
 
 	/**
@@ -100,7 +100,8 @@ class Decode_Asset_Management_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		 wp_enqueue_script('am_admin_bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js',array('jquery'));
+		 // wp_enqueue_script('am_admin_bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js',array('jquery'));
+		 wp_enqueue_script('am_admin_bootstrap',plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js', array( 'jquery' ), $this->version, false);
 		 wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/decode-asset-management-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
@@ -129,7 +130,25 @@ class Decode_Asset_Management_Admin {
 	}
 
 	public function displayForm(){
-		return (new TWMGForm\TWMG_Form(array(array("type"=>"textbox","name"=>"decode_from"))))->display();
+		$form_fields=[
+			[
+				"type"=>"TWMG_Textbox",
+				"attributes"=>["name"=>"asset_name","class"=>"form-control","placeholder"=>"Asset Name"]
+			],
+			[
+				"type"=>"TWMG_Textbox",
+				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"];
+			],
+			[
+				"type"=>"TWMG_Textbox",
+				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"];
+			],
+			[
+				"type"=>"TWMG_Textbox",
+				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"];
+			]
+		];
+		return (new TWMGForm\TWMG_Form($form_fields))->display();
 	}
 
 }
