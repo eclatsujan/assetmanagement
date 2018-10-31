@@ -137,15 +137,15 @@ class Decode_Asset_Management_Admin {
 			],
 			[
 				"type"=>"TWMG_Textbox",
-				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"];
+				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"]
 			],
 			[
 				"type"=>"TWMG_Textbox",
-				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"];
+				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"]
 			],
 			[
 				"type"=>"TWMG_Textbox",
-				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"];
+				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"]
 			]
 		];
 		return (new TWMGForm\TWMG_Form($form_fields))->display();
