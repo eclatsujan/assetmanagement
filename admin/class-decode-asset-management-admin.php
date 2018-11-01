@@ -133,19 +133,19 @@ class Decode_Asset_Management_Admin {
 		$form_fields=[
 			[
 				"type"=>"TWMG_Textbox",
-				"attributes"=>["name"=>"asset_name","class"=>"form-control","placeholder"=>"Asset Name"]
+				"attributes"=>["name"=>"asset_name","class"=>"form-control mb-3","placeholder"=>"Asset Name"]
+			],
+			[
+				"type"=>"TWMG_Select",
+				"attributes"=>["name"=>"category_id","class"=>"form-control mb-2","placeholder"=>"Category Id","options"=>[1=>"Laptop",2=>"Custom Laptop"]]
 			],
 			[
 				"type"=>"TWMG_Textbox",
-				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"]
+				"attributes"=>["name"=>"category_id","class"=>"form-control mb-2","placeholder"=>"Category Id"]
 			],
 			[
 				"type"=>"TWMG_Textbox",
-				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"]
-			],
-			[
-				"type"=>"TWMG_Textbox",
-				"attributes"=>["name"=>"category_id","class"=>"form-control","placeholder"=>"Category Id"]
+				"attributes"=>["name"=>"category_id","class"=>"form-control mb-2","placeholder"=>"Category Id"]
 			]
 		];
 		return (new TWMGForm\TWMG_Form($form_fields))->display();
